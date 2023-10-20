@@ -1,0 +1,34 @@
+server:
+  port: 9000
+spring:
+  security:
+    user:
+      name: admin
+      password: admin
+  application:
+    name: gateway-server
+  cloud:
+    gateway:
+      routes:
+        - id: micro-tiendas
+          uri: lb://tiendas
+          predicates:
+            - Path=/tiendas/**
+          filters:
+            - AuthenticationFilter
+        - id: micro-precios
+          uri: lb://precios
+          predicates:
+            - Path=/precios/**
+          filters:
+            - AuthenticationFilter
+        - id: micro-prendas
+          uri: lb://prendas
+          predicates:
+            - Path=/prendas/**
+          filters:
+            - AuthenticationFilter
+        - id: micro-usuarios
+          uri: lb://usuarios
+          predicates:
+            - Path=/auth/**
